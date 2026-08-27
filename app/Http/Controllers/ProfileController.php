@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class ProfileController extends Controller
 {
   public function show()
@@ -28,5 +28,14 @@ class ProfileController extends Controller
         $user->update($request->only('name', 'email'));
 
         return redirect()->route('profile.show')->with('success', 'Profile updated successfully.');
-    }   
+    }
+    public function destroy()
+    {
+        $user = Auth()->user();
+        $user->delete();
+
+        Auth::logout();
+
+        return redirect('/')->with('success', 'Your account has been deleted.');
+    }
 }
