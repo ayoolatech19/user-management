@@ -11,6 +11,10 @@
             <button type="button">View Profile</button>
         </a>
 
+          <a href="{{ route('posts.index') }}">
+            <button type="button">View Posts</button>
+        </a>
+
     <form method="POST" action="/logout">
         @csrf
         <button type="submit">Logout</button>

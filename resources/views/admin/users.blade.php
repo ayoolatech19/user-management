@@ -37,7 +37,10 @@
                     <td>
                         <a href="{{ route('admin.users.edit', $user) }}">
                             <button type="button">Edit</button>
-                        </a>
+                        </a> <br>
+                        <a href="{{ route('admin.users.posts', $user) }}">
+    <button type="button">View Posts</button>
+</a>
 
                         <form method="POST" action="{{ route('admin.users.destroy', $user) }}" onsubmit="return confirm('Delete this user?');" style="display:inline;">
                             @csrf

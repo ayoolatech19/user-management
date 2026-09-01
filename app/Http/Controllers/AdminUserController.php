@@ -57,6 +57,13 @@ public function edit(User $user)
 
     return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
   }
+  
+  public function posts(User $user)
+{
+    $posts = $user->posts;
+
+    return view('admin.users.posts', compact('user', 'posts'));
+}
 
 
 }
