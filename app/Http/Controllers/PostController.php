@@ -75,5 +75,55 @@ public function apiStore(Request $request)
 
     return response()->json($post, 201);
 }
+public function apiShow($id)
+{
+    $post = Post::findOrFail($id);
+
+    return response()->json($post);
+}
+
+ public function  apiupdate(Request $request, $id)
+    {
+  $post = Post::findOrFail($id);
+
+
+    if ($post->user_id !== auth()->id()) {
+        return response()->json(['message' => 'Forbidden'], 403);
+    }
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'body' => 'required|string',
+        ]);
+
+        $post->update($validated);
+       
+        return response()->json($post);
+    }
+
+ public function  apidestroy($id)
+    {
+  $post = Post::findOrFail($id);
+
+
+    if ($post->user_id !== auth()->id()) {
+        return response()->json(['message' => 'Forbidden'], 403);
+    }
+
+
+        $post->delete();
+       
+        return response()->json(['message'=>'Post deleted successfully']);
+    }
+
+    public function apiAdminDestroy($id)
+{
+    $post = Post::findOrFail($id);
+
+    $post->delete();
+
+    return response()->json(['message' => 'Post deleted by admin']);
+}
+
 
 }

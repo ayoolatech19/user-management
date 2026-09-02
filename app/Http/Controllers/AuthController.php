@@ -62,4 +62,27 @@ public function login(Request $request)
         'email' => 'The provided credentials do not match our records.',
     ]);
 }
+
+public function apiLogin(Request $request)
+{
+    $credentials = $request->validate([
+        'email'    => 'required|email',
+        'password' => 'required',
+    ]);
+
+    $user = User::where('email', $credentials['email'])->first();
+
+    if (! $user || ! Hash::check($credentials['password'], $user->password)) {
+        return response()->json([
+            'message' => 'Invalid credentials',
+        ], 401);
+    }
+
+    $token = $user->createToken('api-token')->plainTextToken;
+
+    return response()->json([
+        'user'  => $user,
+        'token' => $token,
+    ]);
+}
 }
