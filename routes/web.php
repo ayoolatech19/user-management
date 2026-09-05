@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\PostController;
+use App\Models\Post;   // ← added
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,8 +16,10 @@ Route::get('/register', [AuthController::class, 'create'])->name('register');
 Route::post('/register', [AuthController::class, 'store'])->name('register.store');
 Route::get('/login', [AuthController::class, 'showloginform'])->name('login');  
 Route::post('/login', [AuthController::class, 'login'])->name('login.store');
+
 Route::get('/dashboard', function () {
-    return view('auth.dashboard');
+    $posts = Post::all();   // ← fixed
+    return view('auth.dashboard', compact('posts'));
 })->middleware('auth')->name('dashboard');
 
 Route::post('/logout', function () {

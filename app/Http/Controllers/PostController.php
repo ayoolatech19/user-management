@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Http\Resources\PostResource;
 
 class PostController extends Controller
 {
@@ -57,7 +58,8 @@ class PostController extends Controller
     // API PostController.php
 public function apiIndex()
 {
-    return response()->json(Post::all());
+    $posts = Post::paginate(5);
+    return PostResource::collection($posts);
 }
 
 public function apiStore(Request $request)
@@ -79,7 +81,7 @@ public function apiShow($id)
 {
     $post = Post::findOrFail($id);
 
-    return response()->json($post);
+    return new PostResource($post);
 }
 
  public function  apiupdate(Request $request, $id)
@@ -98,7 +100,7 @@ public function apiShow($id)
 
         $post->update($validated);
        
-        return response()->json($post);
+        return new PostResources($post);
     }
 
  public function  apidestroy($id)

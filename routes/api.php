@@ -15,6 +15,8 @@ Route::post('/login', [AuthController::class, 'apiLogin']);
 Route::get('/posts/{id}', [PostController::class, 'apiShow']);
 Route::put('/posts/{id}', [PostController::class, 'apiUpdate'])->middleware('auth:sanctum');
 Route::delete('/posts/{id}', [PostController::class, 'apiDestroy'])->middleware('auth:sanctum');
+Route::post('/logout', [AuthController::class, 'apiLogout'])->middleware('auth:sanctum');
+
 
 Route::delete('/admin/posts/{id}', [PostController::class, 'apiAdminDestroy'])
     ->middleware(['auth:sanctum', 'admin']);

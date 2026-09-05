@@ -6,19 +6,25 @@
 <body>
     <h1>Login</h1>
 
-    @if (session('error'))
-        <p style="color:red;">{{ session('error') }}</p>
-    @endif
+@if ($errors->any())
+    <div style="color:red;">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
     <form method="POST" action="/login">
         @csrf
 
         <label>Email:</label>
-        <input type="email" name="email">
+        <input type="email" name="email" autocomplete="off">
         <br><br>
 
         <label>Password:</label>
-        <input type="password" name="password">
+        <input type="password" name="password" autocomplete="off">
         <br><br>
 
         <button type="submit">Login</button>
